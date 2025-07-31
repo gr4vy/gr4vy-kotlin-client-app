@@ -9,6 +9,36 @@
 
 A Kotlin Android sample application demonstrating integration with the [Gr4vy Kotlin Android SDK](https://github.com/gr4vy/gr4vy-kotlin). This app provides a testing interface for the SDK endpoints with persistent configuration management using Jetpack Compose.
 
+- [Summary](#summary)
+- [Architecture](#architecture)
+- [App Structure](#app-structure)
+  - [Bottom Navigation](#bottom-navigation)
+  - [API Screens (4 Endpoints)](#api-screens-4-endpoints)
+- [Admin Panel](#admin-panel)
+  - [Core Configuration](#core-configuration)
+  - [How Configuration Works](#how-configuration-works)
+- [Key Features](#key-features)
+  - [Coroutines Implementation](#coroutines-implementation)
+  - [Error Handling](#error-handling)
+  - [Response Handling](#response-handling)
+  - [Data Persistence](#data-persistence)
+- [Setup Instructions](#setup-instructions)
+  - [1. Configure Admin Settings](#1-configure-admin-settings)
+  - [2. Test API Endpoints](#2-test-api-endpoints)
+  - [3. Development Usage](#3-development-usage)
+- [Customization](#customization)
+  - [Adding New Endpoints](#adding-new-endpoints)
+  - [Modifying UI](#modifying-ui)
+  - [SDK Integration](#sdk-integration)
+- [Project Structure](#project-structure)
+- [Dependencies](#dependencies)
+- [Requirements](#requirements)
+- [Build \& Run](#build--run)
+  - [Using Android Studio](#using-android-studio)
+  - [Using Command Line](#using-command-line)
+- [CI/CD](#cicd)
+- [License](#license)
+
 ## Architecture
 
 The app uses modern Android patterns with Kotlin Coroutines for async API calls, calling the Gr4vy Android SDK directly and DataStore for persistent configuration across app sessions.
