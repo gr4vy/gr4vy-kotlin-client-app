@@ -1,6 +1,13 @@
-# Gr4vy Kotlin Android Sample App
+# Kotlin Client App for Gr4vy Kotlin SDK
 
-A Kotlin Android sample application demonstrating integration with the Gr4vy Android SDK. This app provides a testing interface for the SDK endpoints with persistent configuration management using Jetpack Compose.
+<div align="left">
+    <img alt="Platforms" src="https://img.shields.io/badge/Platforms-Android-yellowgreen?style=for-the-badge">
+    <img alt="Build Status" src="https://img.shields.io/github/actions/workflow/status/gr4vy/gr4vy-kotlin-client-app/android.yml?branch=main&style=for-the-badge">
+</div>
+
+## Summary
+
+A Kotlin Android sample application demonstrating integration with the [Gr4vy Kotlin Android SDK](https://github.com/gr4vy/gr4vy-kotlin). This app provides a testing interface for the SDK endpoints with persistent configuration management using Jetpack Compose.
 
 ## Architecture
 
