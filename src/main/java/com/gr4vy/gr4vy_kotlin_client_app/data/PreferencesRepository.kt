@@ -35,10 +35,14 @@ class PreferencesRepository(private val context: Context) {
         private val FIELDS_CARD_NUMBER = stringPreferencesKey("fields_card_number")
         private val FIELDS_EXPIRATION_DATE = stringPreferencesKey("fields_expiration_date")
         private val FIELDS_SECURITY_CODE = stringPreferencesKey("fields_security_code")
-        private val FIELDS_MERCHANT_TRANSACTION_ID = stringPreferencesKey("fields_merchant_transaction_id")
-        private val FIELDS_SRC_CORRELATION_ID = stringPreferencesKey("fields_src_correlation_id")
         private val FIELDS_PAYMENT_METHOD_ID = stringPreferencesKey("fields_payment_method_id")
         private val FIELDS_ID_SECURITY_CODE = stringPreferencesKey("fields_id_security_code")
+        
+        // 3DS Settings
+        private val FIELDS_AUTHENTICATE = booleanPreferencesKey("fields_authenticate")
+        private val FIELDS_TEST_CARD = stringPreferencesKey("fields_test_card")
+        private val FIELDS_THEME = stringPreferencesKey("fields_theme")
+        private val FIELDS_SDK_MAX_TIMEOUT = stringPreferencesKey("fields_sdk_max_timeout")
         
         // Card Details
         private val CARD_DETAILS_NUMBER = stringPreferencesKey("card_details_number")
@@ -84,10 +88,14 @@ class PreferencesRepository(private val context: Context) {
     val fieldsCardNumber: Flow<String> = context.dataStore.data.map { it[FIELDS_CARD_NUMBER] ?: "" }
     val fieldsExpirationDate: Flow<String> = context.dataStore.data.map { it[FIELDS_EXPIRATION_DATE] ?: "" }
     val fieldsSecurityCode: Flow<String> = context.dataStore.data.map { it[FIELDS_SECURITY_CODE] ?: "" }
-    val fieldsMerchantTransactionId: Flow<String> = context.dataStore.data.map { it[FIELDS_MERCHANT_TRANSACTION_ID] ?: "" }
-    val fieldsSrcCorrelationId: Flow<String> = context.dataStore.data.map { it[FIELDS_SRC_CORRELATION_ID] ?: "" }
     val fieldsPaymentMethodId: Flow<String> = context.dataStore.data.map { it[FIELDS_PAYMENT_METHOD_ID] ?: "" }
     val fieldsIdSecurityCode: Flow<String> = context.dataStore.data.map { it[FIELDS_ID_SECURITY_CODE] ?: "" }
+    
+    // 3DS Settings
+    val fieldsAuthenticate: Flow<Boolean> = context.dataStore.data.map { it[FIELDS_AUTHENTICATE] ?: true }
+    val fieldsTestCard: Flow<String> = context.dataStore.data.map { it[FIELDS_TEST_CARD] ?: "custom" }
+    val fieldsTheme: Flow<String> = context.dataStore.data.map { it[FIELDS_THEME] ?: "none" }
+    val fieldsSdkMaxTimeout: Flow<String> = context.dataStore.data.map { it[FIELDS_SDK_MAX_TIMEOUT] ?: "5" }
     
     // Card Details
     val cardDetailsNumber: Flow<String> = context.dataStore.data.map { it[CARD_DETAILS_NUMBER] ?: "" }
@@ -175,20 +183,28 @@ class PreferencesRepository(private val context: Context) {
         context.dataStore.edit { it[FIELDS_SECURITY_CODE] = value }
     }
     
-    suspend fun saveFieldsMerchantTransactionId(value: String) {
-        context.dataStore.edit { it[FIELDS_MERCHANT_TRANSACTION_ID] = value }
-    }
-    
-    suspend fun saveFieldsSrcCorrelationId(value: String) {
-        context.dataStore.edit { it[FIELDS_SRC_CORRELATION_ID] = value }
-    }
-    
     suspend fun saveFieldsPaymentMethodId(value: String) {
         context.dataStore.edit { it[FIELDS_PAYMENT_METHOD_ID] = value }
     }
     
     suspend fun saveFieldsIdSecurityCode(value: String) {
         context.dataStore.edit { it[FIELDS_ID_SECURITY_CODE] = value }
+    }
+    
+    suspend fun saveFieldsAuthenticate(value: Boolean) {
+        context.dataStore.edit { it[FIELDS_AUTHENTICATE] = value }
+    }
+    
+    suspend fun saveFieldsTestCard(value: String) {
+        context.dataStore.edit { it[FIELDS_TEST_CARD] = value }
+    }
+    
+    suspend fun saveFieldsTheme(value: String) {
+        context.dataStore.edit { it[FIELDS_THEME] = value }
+    }
+    
+    suspend fun saveFieldsSdkMaxTimeout(value: String) {
+        context.dataStore.edit { it[FIELDS_SDK_MAX_TIMEOUT] = value }
     }
     
     suspend fun saveCardDetailsNumber(value: String) {

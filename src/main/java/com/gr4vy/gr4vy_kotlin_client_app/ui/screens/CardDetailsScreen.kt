@@ -573,6 +573,9 @@ private fun handleGr4vyError(error: Gr4vyError, gr4vyId: String, onError: (Strin
         is Gr4vyError.DecodingError -> {
             onError("Decoding error: ${error.errorMessage}")
         }
+        else -> {
+            onError("Error: ${error.message}")
+        }
     }
 }
 

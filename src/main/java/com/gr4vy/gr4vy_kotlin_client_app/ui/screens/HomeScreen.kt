@@ -71,7 +71,7 @@ fun HomeScreen(navController: NavController) {
             )
             
             NavigationButton(
-                title = "Fields",
+                title = "Tokenize",
                 icon = Icons.Default.Build,
                 onClick = { navController.navigate("fields") }
             )
