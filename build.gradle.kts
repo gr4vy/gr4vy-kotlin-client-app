@@ -67,7 +67,7 @@ dependencies {
     implementation(libs.androidx.lifecycle.viewmodel.compose)
     
     // Gr4vy SDK
-    implementation("com.gr4vy:gr4vy-kotlin:1.0.1")
+    implementation("com.gr4vy:gr4vy-kotlin:1.2.2")
     
     testImplementation(libs.junit)
     androidTestImplementation(libs.androidx.junit)
