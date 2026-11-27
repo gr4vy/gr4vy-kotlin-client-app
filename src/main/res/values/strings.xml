@@ -1,3 +1,4 @@
 <resources>
     <string name="app_name">Gr4vy Kotlin Client App</string>
+    <string name="app_name_appcompat">Gr4vy (AppCompat)</string>
 </resources>
