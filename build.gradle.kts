@@ -1,3 +1,5 @@
+import org.jetbrains.kotlin.gradle.dsl.JvmTarget
+
 plugins {
     alias(libs.plugins.android.application)
     alias(libs.plugins.kotlin.android)
@@ -32,11 +34,15 @@ android {
         sourceCompatibility = JavaVersion.VERSION_11
         targetCompatibility = JavaVersion.VERSION_11
     }
-    kotlinOptions {
-        jvmTarget = "11"
-    }
     buildFeatures {
         compose = true
+    }
+}
+
+// Kotlin 2.4 rejects android.kotlinOptions; same target as before.
+kotlin {
+    compilerOptions {
+        jvmTarget.set(JvmTarget.JVM_11)
     }
 }
 
@@ -65,9 +71,12 @@ dependencies {
     
     // ViewModel
     implementation(libs.androidx.lifecycle.viewmodel.compose)
-    
+
+    // AppCompat, for the QA host activity where the 3DS SDK uses AndroidX dialogs
+    implementation(libs.androidx.appcompat)
+
     // Gr4vy SDK
-    implementation("com.gr4vy:gr4vy-kotlin:1.0.1")
+    implementation("com.gr4vy:gr4vy-kotlin:1.3.0")
     
     testImplementation(libs.junit)
     androidTestImplementation(libs.androidx.junit)

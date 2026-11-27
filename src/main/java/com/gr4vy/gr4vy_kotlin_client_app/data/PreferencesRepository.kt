@@ -43,7 +43,8 @@ class PreferencesRepository(private val context: Context) {
         private val FIELDS_TEST_CARD = stringPreferencesKey("fields_test_card")
         private val FIELDS_THEME = stringPreferencesKey("fields_theme")
         private val FIELDS_SDK_MAX_TIMEOUT = stringPreferencesKey("fields_sdk_max_timeout")
-        
+        private val FIELDS_PREFERRED_SCHEME = stringPreferencesKey("fields_preferred_scheme")
+
         // Card Details
         private val CARD_DETAILS_NUMBER = stringPreferencesKey("card_details_number")
         private val CARD_DETAILS_CURRENCY = stringPreferencesKey("card_details_currency")
@@ -96,6 +97,7 @@ class PreferencesRepository(private val context: Context) {
     val fieldsTestCard: Flow<String> = context.dataStore.data.map { it[FIELDS_TEST_CARD] ?: "custom" }
     val fieldsTheme: Flow<String> = context.dataStore.data.map { it[FIELDS_THEME] ?: "none" }
     val fieldsSdkMaxTimeout: Flow<String> = context.dataStore.data.map { it[FIELDS_SDK_MAX_TIMEOUT] ?: "5" }
+    val fieldsPreferredScheme: Flow<String> = context.dataStore.data.map { it[FIELDS_PREFERRED_SCHEME] ?: "" }
     
     // Card Details
     val cardDetailsNumber: Flow<String> = context.dataStore.data.map { it[CARD_DETAILS_NUMBER] ?: "" }
@@ -205,6 +207,10 @@ class PreferencesRepository(private val context: Context) {
     
     suspend fun saveFieldsSdkMaxTimeout(value: String) {
         context.dataStore.edit { it[FIELDS_SDK_MAX_TIMEOUT] = value }
+    }
+
+    suspend fun saveFieldsPreferredScheme(value: String) {
+        context.dataStore.edit { it[FIELDS_PREFERRED_SCHEME] = value }
     }
     
     suspend fun saveCardDetailsNumber(value: String) {

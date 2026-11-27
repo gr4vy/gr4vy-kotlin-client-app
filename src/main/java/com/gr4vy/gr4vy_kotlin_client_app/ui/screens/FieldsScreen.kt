@@ -473,7 +473,8 @@ fun FieldsScreen(
     val savedTestCard by preferencesRepository.fieldsTestCard.collectAsState(initial = "custom")
     val savedTheme by preferencesRepository.fieldsTheme.collectAsState(initial = "none")
     val savedSdkMaxTimeout by preferencesRepository.fieldsSdkMaxTimeout.collectAsState(initial = "5")
-    
+    val savedPreferredScheme by preferencesRepository.fieldsPreferredScheme.collectAsState(initial = "")
+
     // Local state
     var checkoutSessionId by remember { mutableStateOf("") }
     var selectedPaymentMethodType by remember { mutableStateOf(PaymentMethodType.CARD) }
@@ -489,12 +490,13 @@ fun FieldsScreen(
     var selectedTestCard by remember { mutableStateOf(TestCard.CUSTOM) }
     var selectedTheme by remember { mutableStateOf(ThemeOption.NONE) }
     var sdkMaxTimeout by remember { mutableStateOf("5") }
-    
+    var preferredScheme by remember { mutableStateOf("") }
+
     // Update local state when preferences change
     LaunchedEffect(
-        savedCheckoutSessionId, savedPaymentMethodType, savedCardNumber, savedExpirationDate, 
+        savedCheckoutSessionId, savedPaymentMethodType, savedCardNumber, savedExpirationDate,
         savedSecurityCode, savedPaymentMethodId, savedIdSecurityCode,
-        savedAuthenticate, savedTestCard, savedTheme, savedSdkMaxTimeout
+        savedAuthenticate, savedTestCard, savedTheme, savedSdkMaxTimeout, savedPreferredScheme
     ) {
         checkoutSessionId = savedCheckoutSessionId
         selectedPaymentMethodType = if (savedPaymentMethodType.isNotEmpty()) {
@@ -511,6 +513,7 @@ fun FieldsScreen(
         selectedTestCard = TestCard.fromRawValue(savedTestCard)
         selectedTheme = ThemeOption.fromRawValue(savedTheme)
         sdkMaxTimeout = savedSdkMaxTimeout
+        preferredScheme = savedPreferredScheme
     }
     
     Scaffold(
@@ -757,6 +760,23 @@ fun FieldsScreen(
                                 }
                             )
                         }
+
+                        // Preferred scheme for co-badged cards, sent as ?preferredScheme= on the 3DS version call
+                        OutlinedTextField(
+                            value = preferredScheme,
+                            onValueChange = { value ->
+                                preferredScheme = value
+                                coroutineScope.launch {
+                                    preferencesRepository.saveFieldsPreferredScheme(value)
+                                }
+                            },
+                            label = { Text("preferred_scheme") },
+                            supportingText = { Text("Gr4vy scheme ID, e.g. carte-bancaire or visa. Empty for no preference.") },
+                            enabled = authenticate,
+                            singleLine = true,
+                            keyboardOptions = KeyboardOptions(keyboardType = KeyboardType.Ascii),
+                            modifier = Modifier.fillMaxWidth()
+                        )
                     }
                 }
                 
@@ -1009,6 +1029,7 @@ fun FieldsScreen(
                             authenticate = authenticate,
                             selectedTheme = selectedTheme,
                             sdkMaxTimeout = sdkMaxTimeout,
+                            preferredScheme = preferredScheme,
                             onLoading = { isLoading = it },
                             onError = { title, errorJson ->
                                 // Navigate to full-page error response screen
@@ -1047,6 +1068,7 @@ private suspend fun sendTokenizeRequest(
     authenticate: Boolean,
     selectedTheme: ThemeOption,
     sdkMaxTimeout: String,
+    preferredScheme: String,
     onLoading: (Boolean) -> Unit,
     onError: (String, String) -> Unit,
     onSuccess: (String) -> Unit
@@ -1159,7 +1181,8 @@ private suspend fun sendTokenizeRequest(
                         activity = activity,
                         sdkMaxTimeoutMinutes = timeoutMinutes,
                         authenticate = authenticate,
-                        uiCustomization = uiCustomization
+                        uiCustomization = uiCustomization,
+                        preferredScheme = preferredScheme.trim().ifEmpty { null }
                     )
                     
                     // Build response with authentication details

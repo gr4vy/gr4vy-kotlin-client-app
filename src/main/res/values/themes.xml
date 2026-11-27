@@ -2,4 +2,7 @@
 <resources>
 
     <style name="Theme.Gr4vyKotlinClientApp" parent="android:Theme.Material.Light.NoActionBar" />
+
+    <!-- AppCompatActivity needs an AppCompat theme. Used by AppCompatHostActivity only. -->
+    <style name="Theme.Gr4vyKotlinClientApp.AppCompat" parent="Theme.AppCompat.Light.NoActionBar" />
 </resources>

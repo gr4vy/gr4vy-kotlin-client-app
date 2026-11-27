@@ -24,6 +24,19 @@
                 <category android:name="android.intent.category.LAUNCHER" />
             </intent-filter>
         </activity>
+        <!-- Same app in an AppCompatActivity, for QA of the 3DS SDK's AndroidX challenge dialogs.
+             See "Host activity" in gr4vy-kotlin's docs/QA.md. -->
+        <activity
+            android:name=".AppCompatHostActivity"
+            android:exported="true"
+            android:label="@string/app_name_appcompat"
+            android:theme="@style/Theme.Gr4vyKotlinClientApp.AppCompat">
+            <intent-filter>
+                <action android:name="android.intent.action.MAIN" />
+
+                <category android:name="android.intent.category.LAUNCHER" />
+            </intent-filter>
+        </activity>
     </application>
 
 </manifest>
